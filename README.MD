@@ -44,14 +44,44 @@ Once the Arduino is connected to both sensors and the software is setup it will 
 
 ## Installation
 1. Navigate into your MagicMirror's `modules` folder and execute `git clone https://github.com/thobach/MMM-Gestures.git`. A new folder will appear navigate into it.
-2. Follow below steps to install the Gestures Node.js App and add the module to your Magic Mirror configuration
+2. Install dependencies via: `npm install serialport nodejs-websocket`
+3. Follow below steps to install the Gestures Node.js App and add the module to your Magic Mirror configuration
 
 ### Gestures Node.js App on Raspberry Pi
 Communication between Raspberry Pi and Arduino happens via the serial port (USB). The Node.js/gestures.js app from this project creates the connection between the two systems (Raspberry Pi and Arduino), forwards gesture and distance events to the web user interface via WebSocket communication and also controls the HDMI display to save power if nobody has interacted with or stood in front of the mirror for 5 minutes.
 
-To start the Gestures Node.js App run: node "MMM-Gestures/Node.js/gestures.js".
+To start the Gestures Node.js App run: node "MMM-Gestures/Node.js/gestures.js". This node app cannot be run from Magic Mirror directly since Electron uses a non-compatible Node.js version for package serialport.
 
 In order to launch the Node.js Gestures application on launch, you can adopt https://github.com/MichMich/MagicMirror/wiki/Auto-Starting-MagicMirror. You'll need to create a new shell script, e.g. gestures.sh and inside will need to call "node gestures.js" instead of "npm mm".
+
+The following instructions assume you followed https://github.com/MichMich/MagicMirror/wiki/Auto-Starting-MagicMirror already.
+
+Create a simple shell script to start the gesture application:
+````
+cd ~
+nano gestures.sh
+````
+
+Add the following lines:
+````
+cd ~/MagicMirror/modules/MMM-Gestures/Node.js/
+DISPLAY=:0 node gestures.js
+````
+
+Save and close, using the commands "CTRL-O" and "CTRL-X". Now make sure the shell script is executable by performing the following command:
+````
+chmod +x gestures.sh
+````
+
+Start the gesture application with the following command:
+````
+pm2 start gestures.sh
+````
+
+To make sure the gesture application restarts after rebooting, you need to save the current state of all scripts running via PM2. To do this, execute the following command
+````
+pm2 save
+````
 
 ### Embedding MMM-Gestures
 In order to load the MMM-Gestures module you will need to add the following configuration to your config/config.js file and ensure that the Node.js application gestures.js is loaded.
