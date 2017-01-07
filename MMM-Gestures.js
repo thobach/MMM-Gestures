@@ -98,6 +98,34 @@ Module.register('MMM-Gestures',{
 					
 				}
 			}
+			
+			// interact with newsfeed module upon UP, DOWN, LEFT, RIGHT gesture
+			var newsfeedModules = MM.getModules().withClass('newsfeed');
+			
+			if(newsfeedModules){
+			
+				var notification = "UNKNOWN";
+
+				// reverting orders since sensor is usually built in upside down
+				if(e.data == 'LEFT'){
+					notifiaction = "ARTICLE_NEXT";					
+				} else if(e.data == 'RIGHT'){
+					notifiaction = "ARTICLE_PREVIOUS";
+				} else if(e.data == 'UP'){
+					notifiaction = "ARTICLE_LESS_DETAILS";
+				} else if(e.data == 'DOWN'){
+					notifiaction = "ARTICLE_MORE_DETAILS";
+				} else {
+					Log.info('Not handling received gesture in this module directly:');
+					Log.info(e.data);					
+				}
+				
+				// forward gesture to other modules
+				Log.info('Sending ' + notifiaction + '.');
+				self.sendNotification('notifiaction');
+				
+			}
+
 		};
 		
 	},
