@@ -53,7 +53,7 @@ Module.register('MMM-Gestures',{
 		// On connection close log error and try to reconnect after 5s
 		connection.onclose = function () {
 		
-		  Log.error('Connection to gesture server was closed.'
+		  Log.error('Connection to gesture server was closed.');
 		  
 		  Log.info('Will reconnect to gesture server in 5s.');
 		  setTimeout(function(){self.init()}, 5000);
