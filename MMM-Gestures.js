@@ -20,15 +20,15 @@ Module.register('MMM-Gestures',{
 	defaults: {
 		serverIp: 'localhost', // 192.168.178.29
 	},
-
+	
 	// init connection to server role and setup compliment module hiding/showing upon 
 	// events
-	init: function (){
+	start: function (){
 	
 		var self = this;
 		
 		// create connection to server role to receive gesture events
-		var connection = new WebSocket('ws://' + self.config.serverIp + ':8004');
+		var connection = new WebSocket('ws://' + this.config.serverIp + ':8004');
 		
 		// send message from client to server to test connection to server
 		connection.onopen = function () {
@@ -108,21 +108,21 @@ Module.register('MMM-Gestures',{
 
 				// reverting orders since sensor is usually built in upside down
 				if(e.data == 'LEFT'){
-					notifiaction = "ARTICLE_NEXT";					
+					notification = "ARTICLE_NEXT";					
 				} else if(e.data == 'RIGHT'){
-					notifiaction = "ARTICLE_PREVIOUS";
+					notification = "ARTICLE_PREVIOUS";
 				} else if(e.data == 'UP'){
-					notifiaction = "ARTICLE_LESS_DETAILS";
+					notification = "ARTICLE_LESS_DETAILS";
 				} else if(e.data == 'DOWN'){
-					notifiaction = "ARTICLE_MORE_DETAILS";
+					notification = "ARTICLE_MORE_DETAILS";
 				} else {
 					Log.info('Not handling received gesture in this module directly:');
 					Log.info(e.data);					
 				}
 				
 				// forward gesture to other modules
-				Log.info('Sending ' + notifiaction + '.');
-				self.sendNotification('notifiaction');
+				Log.info('Sending notification: ' + notification + '.');
+				self.sendNotification(notification);
 				
 			}
 
