@@ -100,7 +100,7 @@ The received event has the following format:
 * notification parameter: 'GESTURE'
 * payload parameter: { gesture: 'UP/DOWN/LEFT/RIGHT/FAR/CLOSE/AWAY/PRESENT' }
 
-Sample code for adopting the standard News Feed module to react to gesture events:
+Sample code for reacting to gesture events:
 ````javascript
 notificationReceived: function(notification, payload, sender) {
 	Log.info(this.name + " - received event");
@@ -110,15 +110,10 @@ notificationReceived: function(notification, payload, sender) {
 		// actually RIGHT, because gesture sensor is built in upside down
 		if(gesture.startsWith('LEFT')){
 			Log.info(this.name + " - received right");
-			var before = this.activeItem;
-			this.activeItem++;
-			if (this.activeItem >= this.newsItems.length) {
-				this.activeItem = 0;
-			}
-			if(!timer){
-				this.scheduleUpdateInterval();
-			}
-			Log.info(this.name + " - going from " + before + " to " + this.activeItem + " (of " + this.newsItems.length + ")");
+			
+			// adjust some internal representation ...
+			
+			// update display
 			this.updateDom(100);
 		}
 		// actually LEFT, because gesture sensor is built in upside down
