@@ -44,7 +44,7 @@ Once the Arduino is connected to both sensors and the software is setup it will 
 
 ## Installation
 1. Navigate into your MagicMirror's `modules` folder and execute `git clone https://github.com/thobach/MMM-Gestures.git`. A new folder will appear navigate into it.
-2. Install dependencies via: `npm install serialport nodejs-websocket`
+2. Install dependencies via: `npm install serialport@4.x.x nodejs-websocket`
 3. Follow below steps to install the Gestures Node.js App and add the module to your Magic Mirror configuration
 
 ### Gestures Node.js App on Raspberry Pi
