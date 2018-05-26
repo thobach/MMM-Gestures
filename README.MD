@@ -3,9 +3,9 @@ MMM-Gestures is a head-less 3rd party module for [MagicMirror](https://github.co
 
 ## Functionality
 * Control magic mirror modules via gestures, e.g.
-** scroll through news via left / right gestures, show news details (description, full news article) via up gesture
-** show compliment when person stands in front of mirror via present gesture
-** reload mirror via far / close gesture
+    * scroll through news via left / right gestures, show news details (description, full news article) via up gesture
+    * show compliment when person stands in front of mirror via present gesture
+    * reload mirror via far / close gesture
 * Energy saving through turning off the monitor 5 minutes after use, and turning on the monitor if a person stands in front of the mirror
 
 ## Hardware Setup
@@ -134,15 +134,15 @@ By default this module looks for the compliments module and only shows complimen
 
 Available gestures:
 * Distance sensor GP2Y0A21YK gestures:
-** AWAY (fired when person is more than ~50cm away from the sensor)
-** PRESENT (fired when person is less than ~50cm away from the sensor)
+    * AWAY (fired when person is more than ~50cm away from the sensor)
+    * PRESENT (fired when person is less than ~50cm away from the sensor)
 * Gesture sensor APDS-9960 gestures (only activated when person is in front of the mirror, reacts to movements e.g. of a hand, 3-10cm in front of the sensor):
-** LEFT (left to right movement with an object)
-** RIGHT (right to left movement with an object)
-** UP (bottom to top movement with an object)
-** DOWN (top to bottom movement with an object)
-** FAR (close to far movement with an object)
-** CLOSE (far to close movement with an object)
+    * LEFT (left to right movement with an object)
+    * RIGHT (right to left movement with an object)
+    * UP (bottom to top movement with an object)
+    * DOWN (top to bottom movement with an object)
+    * FAR (close to far movement with an object)
+    * CLOSE (far to close movement with an object)
 
 Note: If the sensor is installed upside-down the events from the gesture sensor APDS-9960 are reversed, e.g. a left gesture would be received as RIGHT. This does not apply to FAR and CLOSE gestures.
 
