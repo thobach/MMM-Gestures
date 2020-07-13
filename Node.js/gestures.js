@@ -96,10 +96,10 @@ function saveEnergy(person) {
 // init node.js app
 function init() {
 	
-	// make system call to get device where Arduino is connected (e.g. /dev/ttyACM0)
+	// make system call to get device where Arduino is connected (e.g. /dev/ttyUSB0)
 	// can vary depending on which USB port the Arduino is connected
 	var exec = require('child_process').exec;
-	exec('ls /dev/ttyACM*', function(error, stdout, stderr) {
+	exec('ls /dev/ttyUSB*', function(error, stdout, stderr) {
 	
 		if (error !== null) {
 		
@@ -112,9 +112,9 @@ function init() {
 			process.stdout.write(new Date() + ': Using USB: ' + usbDev + '.\n');
 			
 			// create serial port for connected Arduino
-			var serialPort = new SerialPort(usbDev, {
-			  baudrate: 9600,
-			  parser: serialport.parsers.readline("\n")
+			var serialPort = new serialport(usbDev, {
+			  baudRate: 9600,
+			  parser: new serialport.parsers.Readline("\n")
 			});
 
 			// list to events from Arduino via serial USB port (e.g. from /dev/ttyACM0)
@@ -129,7 +129,7 @@ function init() {
 		
 						console.log(data);
 			
-						var person = data.replace("Person: ","");
+						var person = data.toString().replace("Person: ","");
 						// remove ending newline
 						person = person.replace(/(\r\n|\n|\r)/gm,"");
 					
@@ -143,7 +143,7 @@ function init() {
 		
 						console.log(data);
 			
-						var gesture = data.replace("Gesture: ","");
+						var gesture = data.toString().replace("Gesture: ","");
 						// remove ending newline
 						gesture = gesture.replace(/(\r\n|\n|\r)/gm,"");
 					
