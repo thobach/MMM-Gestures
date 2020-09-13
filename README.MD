@@ -47,7 +47,7 @@ Once the Arduino is connected to both sensors and the software is setup it will 
 2. Install dependencies via: `cd MMM-Gestures && npm install`
 3. Follow below steps to install the Gestures Node.js App and add the module to your Magic Mirror configuration
 
-Note: If you use a Raspberry Pi 3 (vs. 2), e.g. on Raspbian Stretch, you may need to change the USB device name in https://github.com/thobach/MMM-Gestures/blob/master/Node.js/gestures.js#L102 from `ACM` to `USB`.
+Note: If you use a Raspberry Pi 3 (vs. 2), e.g. on Raspbian Stretch, you may need to change the USB device name in https://github.com/thobach/MMM-Gestures/blob/master/node-helper.js#L104 from `ACM` to `USB`.
 
 ### Gestures Node.js App on Raspberry Pi
 Communication between Raspberry Pi and Arduino happens via the serial port (USB). The `node-helper.js` app from this project creates the connection between the two systems (Raspberry Pi and Arduino), forwards gesture and distance events to the web user interface via the MagicMirror's built-in socket communication and also controls the HDMI display to save power if nobody has interacted with or stood in front of the mirror for 5 minutes.
