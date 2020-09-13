@@ -1,0 +1,32 @@
+{
+	"name": "Magic-Mirror-Module-Gestures",
+	"description": "Gesture module for the Magic Mirror.",
+	"version": "1.0.0",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/thobach/MMM-Gestures"
+	},
+	"keywords": [
+		"magic mirror",
+		"smart mirror",
+		"gesture",
+		"gestures",
+		"module"
+	],
+	"author": "Thomas Bachmann",
+	"contributors": [
+		"https://github.com/thobach/MMM-Gestures/graphs/contributors"
+	],
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/thobach/MMM-Gestures/issues"
+	},
+	"homepage": "https://github.com/thobach/MMM-Gestures#readme",
+	"dependencies": {
+		"serialport": "latest",
+		"electron-rebuild": "latest"
+	},
+	"scripts": {
+		"postinstall": "$(npm bin)/electron-rebuild"
+	}
+}

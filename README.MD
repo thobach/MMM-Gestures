@@ -1,4 +1,4 @@
-# MMM-Gestures 
+# MMM-Gestures
 MMM-Gestures is a head-less 3rd party module for [MagicMirror](https://github.com/MichMich/MagicMirror) that allows to control the Magic Mirror via gestures of two types of infrared sensors. Gestures can be up, down, left, right, far and close movements of the hand in front of a gesture sensor (APDS-9960) and present and away gestures in front of an IR distance sensor (GP2Y0A21YK).
 
 ## Functionality
@@ -43,50 +43,17 @@ In order to compile you'll need to copy the following libraries to Arduino's lib
 Once the Arduino is connected to both sensors and the software is setup it will send gesture events to the Raspberry Pi via USB. On the Raspberry Pi a Node.js programm will listen to these events and make them available via a WebSocket server.
 
 ## Installation
-1. Navigate into your MagicMirror's `modules` folder and execute `git clone https://github.com/thobach/MMM-Gestures.git`. A new folder will appear navigate into it.
-2. Install dependencies via: `npm install serialport@4.x.x nodejs-websocket`
+1. Navigate into your MagicMirror's `modules` folder and execute `git clone https://github.com/thobach/MMM-Gestures.git`.
+2. Install dependencies via: `cd MMM-Gestures && npm install`
 3. Follow below steps to install the Gestures Node.js App and add the module to your Magic Mirror configuration
 
 Note: If you use a Raspberry Pi 3 (vs. 2), e.g. on Raspbian Stretch, you may need to change the USB device name in https://github.com/thobach/MMM-Gestures/blob/master/Node.js/gestures.js#L102 from `ACM` to `USB`.
 
 ### Gestures Node.js App on Raspberry Pi
-Communication between Raspberry Pi and Arduino happens via the serial port (USB). The Node.js/gestures.js app from this project creates the connection between the two systems (Raspberry Pi and Arduino), forwards gesture and distance events to the web user interface via WebSocket communication and also controls the HDMI display to save power if nobody has interacted with or stood in front of the mirror for 5 minutes.
-
-To start the Gestures Node.js App run: node "MMM-Gestures/Node.js/gestures.js". This node app cannot be run from Magic Mirror directly since Electron uses a non-compatible Node.js version for package serialport.
-
-In order to launch the Node.js Gestures application on launch, you can adopt https://github.com/MichMich/MagicMirror/wiki/Auto-Starting-MagicMirror. You'll need to create a new shell script, e.g. gestures.sh and inside will need to call "node gestures.js" instead of "npm mm".
-
-The following instructions assume you followed https://github.com/MichMich/MagicMirror/wiki/Auto-Starting-MagicMirror already.
-
-Create a simple shell script to start the gesture application:
-````
-cd ~
-nano gestures.sh
-````
-
-Add the following lines:
-````
-cd ~/MagicMirror/modules/MMM-Gestures/Node.js/
-DISPLAY=:0 node gestures.js
-````
-
-Save and close, using the commands "CTRL-O" and "CTRL-X". Now make sure the shell script is executable by performing the following command:
-````
-chmod +x gestures.sh
-````
-
-Start the gesture application with the following command:
-````
-pm2 start gestures.sh
-````
-
-To make sure the gesture application restarts after rebooting, you need to save the current state of all scripts running via PM2. To do this, execute the following command
-````
-pm2 save
-````
+Communication between Raspberry Pi and Arduino happens via the serial port (USB). The `node-helper.js` app from this project creates the connection between the two systems (Raspberry Pi and Arduino), forwards gesture and distance events to the web user interface via the MagicMirror's built-in socket communication and also controls the HDMI display to save power if nobody has interacted with or stood in front of the mirror for 5 minutes.
 
 ### Embedding MMM-Gestures
-In order to load the MMM-Gestures module you will need to add the following configuration to your config/config.js file and ensure that the Node.js application gestures.js is loaded.
+In order to load the MMM-Gestures module you will need to add the following configuration to your config/config.js file.
 ````javascript
 modules: [
 	{
@@ -96,7 +63,7 @@ modules: [
 ````
 
 ## Reacting to Gestures
-The MMM-Gestures.js Magic Mirror module listens to WebSocket events from the Gestures Node.js App and converts them to Magic Mirror-internal events that can be received via the built-in notificationReceived() function.
+The MMM-Gestures.js Magic Mirror module listens to socket events from the `node-helper.js` app and converts them to Magic Mirror-internal events that can be received via the built-in notificationReceived() function.
 
 The received event has the following format:
 * notification parameter: 'GESTURE'
@@ -112,9 +79,9 @@ notificationReceived: function(notification, payload, sender) {
 		// actually RIGHT, because gesture sensor is built in upside down
 		if(gesture.startsWith('LEFT')){
 			Log.info(this.name + " - received right");
-			
+
 			// adjust some internal representation ...
-			
+
 			// update display
 			this.updateDom(100);
 		}
@@ -148,19 +115,10 @@ Note: If the sensor is installed upside-down the events from the gesture sensor 
 
 You can find a video demonstration of how the sensor works at https://www.youtube.com/watch?v=OS36IdgpEIo. Note, this break-out board is not optimal for use in Magic Mirror since all components are soldered on the front side. On Aliexpress you find nicer breakout boards that have only the sensor on the front side and the other components soldered to the back.
 
-For debugging purposes you can configure the Magic Mirror's server IP in the MMM-Gestures config via:
-````javascript
-config: {
-	serverIp: 'server-ip',
-},
-````
-
-Afterwards you can open the Magic Mirror user interface in your normal browser: http://server-ip:8080 and the normal browser would connect to the WebSocket server on your Magic Mirror.
-
 ## Gesture-enabled Modules
 The following modules react to gesture events from this module:
 * Core application (reload user interface upon FAR gesture, useful for user interface testing)
-* Compliments default module (no modification was needed since MMM-Gestures shows / hides the module upon PRESENT / AWAY events)
-* MMM-NewsGestures (browse through news with left / right swipe, show news summary with up move and full news article with another up move, hides news summary or full article with down gesture)
+* compliments default module (no modification was needed since MMM-Gestures shows / hides the module upon PRESENT / AWAY events)
+* newsfeed default module (browse through news with left / right swipe, show news summary with up move and full news article with another up move, hides news summary or full article with down gesture)
 
 If you build a Gesture-enabled Magic Mirror module, please let me know or create a pull request and I'll link it here.
