@@ -23,7 +23,7 @@ module.exports = NodeHelper.create({
     this.hdmiOn = true;
 
     // handler for timeout function, used to clear timer when display goes off
-    this.turnOffTimer;
+    this.turnOffTimer = undefined;
 
     // put monitor to sleep after 5 minutes without gesture or distance events
     this.WAIT_UNTIL_SLEEP = 1*60*1000;
