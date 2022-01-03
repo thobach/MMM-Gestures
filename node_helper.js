@@ -46,18 +46,18 @@ module.exports = NodeHelper.create({
 
   	// deactivate timeout handler if present
   	if(self.turnOffTimer){
-      console.log(new Date() + ': removing save energy timer');
+  	console.log(new Date() + ': removing save energy timer');
   		clearTimeout(self.turnOffTimer);
   	}
 
   	// turn on display if off and person is present in front of mirror
   	if(person == "PRESENT" && !self.hdmiOn){
 
-      console.log(new Date() + ': turn on display again');
+  	console.log(new Date() + ': turn on display again');
 
   		// make system call to power on display
   		var exec = require('child_process').exec;
-      // alternatively could usee also "tvservice -p", but showed less compatability
+  		// alternatively could usee also "tvservice -p", but showed less compatability
   		exec('vcgencmd display_power 1', function(error, stdout, stderr) {
   			if (error !== null) {
   				console.log(new Date() + ': exec error: ' + error);
@@ -71,14 +71,14 @@ module.exports = NodeHelper.create({
   	// activate timer to turn off display if display is on and person is away for a while
   	else if(person == "AWAY" && self.hdmiOn) {
 
-      console.log(new Date() + ': set timer to turn off display in '+self.WAIT_UNTIL_SLEEP+'s');
+  		console.log(new Date() + ': set timer to turn off display in '+self.WAIT_UNTIL_SLEEP+'s');
 
   		// activate time to turn off display
   		self.turnOffTimer = setTimeout(function(){
 
   			// make system call to turn off display
   			var exec = require('child_process').exec;
-        // alternatively could usee also "tvservice -o", but showed less compatability
+  			// alternatively could usee also "tvservice -o", but showed less compatability
   			exec('vcgencmd display_power 0', function(error, stdout, stderr) {
   				if (error !== null) {
   					console.log(new Date() + ': exec error: ' + error);
@@ -97,11 +97,11 @@ module.exports = NodeHelper.create({
   // init node.js app
   init: function() {
 
-  	// make system call to get device where Arduino is connected (e.g. /dev/ttyACM0)
+  	// make system call to get device where Arduino is connected (e.g. /dev/ttyACM0 or /dev/ttyUSB0)
   	// can vary depending on which USB port the Arduino is connected
   	var exec = require('child_process').exec;
-    var self = this;
-  	exec('ls /dev/ttyUSB*', function(error, stdout, stderr) {
+  	var self = this;
+  	exec('ls /dev/ttyACM*', function(error, stdout, stderr) {
 
   		if (error !== null) {
 
@@ -114,10 +114,10 @@ module.exports = NodeHelper.create({
   			process.stdout.write(new Date() + ': Using USB: ' + usbDev + '.\n');
 
   			// create serial port for connected Arduino
-        const serialPort = new SerialPort(usbDev, {
-          baudRate: 9600
-        });
-        const parser = serialPort.pipe(new Readline({ delimiter: '\n' }));
+  			const serialPort = new SerialPort(usbDev, {
+  				baudRate: 9600
+  			});
+  			const parser = serialPort.pipe(new Readline({ delimiter: '\n' }));
 
   			// list to events from Arduino via serial USB port (e.g. from /dev/ttyACM0)
 
