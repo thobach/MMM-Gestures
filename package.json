@@ -23,10 +23,10 @@
 	},
 	"homepage": "https://github.com/thobach/MMM-Gestures#readme",
 	"dependencies": {
-		"serialport": "latest",
-		"electron-rebuild": "latest"
+		"magicmirror-rebuild": "latest",
+		"serialport": "latest"
 	},
 	"scripts": {
-		"postinstall": "$(npm bin)/electron-rebuild"
+		"postinstall": "node_modules/.bin/MagicMirror-rebuild"
 	}
 }
