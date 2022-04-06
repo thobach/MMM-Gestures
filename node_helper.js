@@ -13,8 +13,8 @@
 
 // retrieving gesture and distance events from Arduino happens via serial port (USB)
 var NodeHelper = require("node_helper");
-const SerialPort = require('serialport');
-const Readline = require('@serialport/parser-readline');
+const { ReadlineParser } = require('@serialport/parser-readline')
+const { SerialPort } = require('serialport')
 
 module.exports = NodeHelper.create({
 	start: function() {
@@ -114,10 +114,8 @@ module.exports = NodeHelper.create({
   			process.stdout.write(new Date() + ': Using USB: ' + usbDev + '.\n');
 
   			// create serial port for connected Arduino
-  			const serialPort = new SerialPort(usbDev, {
-  				baudRate: 9600
-  			});
-  			const parser = serialPort.pipe(new Readline({ delimiter: '\n' }));
+  			const serialPort = new SerialPort({ path: usbDev, baudRate: 9600 });
+  			const parser = serialPort.pipe(new ReadlineParser({ delimiter: '\n' }));
 
   			// list to events from Arduino via serial USB port (e.g. from /dev/ttyACM0)
 
