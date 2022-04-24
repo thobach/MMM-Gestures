@@ -52,6 +52,12 @@ Once the Arduino is connected to both sensors and the software is setup it will 
 
 Note: If you use an older Raspberry Pi 2 or operating system (vs. 3), you may need to change the USB device name in https://github.com/thobach/MMM-Gestures/blob/master/node_helper.js#L104 from `ACM` to `USB`.
 
+### Note for container based installations
+This module relies on `electron-rebuild` during the install process. If you run MagicMirror in a container (e.g. as described at )https://khassel.gitlab.io/magicmirror/), your host operating system may not recognize the electron version and give you the error `An unhandled error occurred inside electron-rebuild
+Unable to find electron's version number of MagicMirror, either install it or specify an explicit version`. To avoid this, you'll need to execute the install command from within the container:
+1. Run `docker exec -it mm bash`, assuming your container is named `mm`
+2. Perform above installation steps 1-3
+
 ### Gestures Node.js App on Raspberry Pi
 Communication between Raspberry Pi and Arduino happens via the serial port (USB). The `node-helper.js` app from this project creates the connection between the two systems (Raspberry Pi and Arduino), forwards gesture and distance events to the web user interface via the MagicMirror's built-in socket communication and also controls the HDMI display to save power if nobody has interacted with or stood in front of the mirror for 5 minutes.
 
