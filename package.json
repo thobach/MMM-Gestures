@@ -23,7 +23,7 @@
 	},
 	"homepage": "https://github.com/thobach/MMM-Gestures#readme",
 	"dependencies": {
-		"magicmirror-rebuild": "1.0.5",
+		"magicmirror-rebuild": "1.0.7",
 		"serialport": "latest"
 	},
 	"scripts": {
