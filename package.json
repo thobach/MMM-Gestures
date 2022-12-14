@@ -24,7 +24,7 @@
 	"homepage": "https://github.com/thobach/MMM-Gestures#readme",
 	"dependencies": {
 		"magicmirror-rebuild": "1.0.7",
-		"serialport": "latest"
+		"serialport": "10.5.0"
 	},
 	"scripts": {
 		"postinstall": "node_modules/.bin/MagicMirror-rebuild"
