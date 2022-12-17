@@ -1,6 +1,3 @@
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/thobach/MMM-Gestures.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/thobach/MMM-Gestures/alerts/)
-[![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/thobach/MMM-Gestures.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/thobach/MMM-Gestures/context:javascript)
-
 # MMM-Gestures
 MMM-Gestures is a head-less 3rd party module for [MagicMirror](https://github.com/MichMich/MagicMirror) that allows to control the Magic Mirror via gestures of two types of infrared sensors. Gestures can be up, down, left, right, far and close movements of the hand in front of a gesture sensor (APDS-9960) and present and away gestures in front of an IR distance sensor (GP2Y0A21YK).
 
