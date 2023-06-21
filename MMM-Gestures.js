@@ -119,6 +119,32 @@ Module.register('MMM-Gestures', {
 
 		}
 
+		var smartwebdisplay = MM.getModules().withClass('MMM-SmartWebDisplay');
+
+                if(smartwebdisplay){
+
+                        var notification = "UNKNOWN";
+
+                        // reverting orders since sensor is usually built in upside down
+                        if(payload == 'LEFT'){
+                                notification = "SWD_PREV";
+                        } else if(payload == 'RIGHT'){
+                                notification = "SWD_NEXT";
+                        } else if(payload == 'UP'){
+                                notification = "PRESENT";
+                        } else if(payload == 'DOWN'){
+                                notification = "AWAY";
+                        } else {
+                                Log.info('Not handling received gesture in this module directly:');
+                                Log.info(payload);
+                        }
+
+                        // forward gesture to other modules
+                        Log.info('Sending notification: ' + notification + '.');
+                        this.sendNotification(notification);
+
+                }
+
 	},
 
 });
